@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"google.golang.org/appengine"
 )
 
 //Type template from Package Template
@@ -24,6 +25,7 @@ func init() {
 }
 
 func main() {
+	appengine.Main()
 	http.HandleFunc("/", idx)
 	//http.HandleFunc("/index", idx)
 	http.HandleFunc("/about", about)
@@ -31,7 +33,7 @@ func main() {
 	http.HandleFunc("/apply", apply)
 	http.HandleFunc("/redirect", redirect)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
-	http.ListenAndServe(":8080", nil)
+	//http.ListenAndServe(":8080", nil)
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
