@@ -22,10 +22,6 @@ type pageData struct {
 func init() {
 	//needs relative reference
 	tpl = template.Must(template.ParseGlob("gohtml-templates/*.gohtml"))
-}
-
-func main() {
-	appengine.Main()
 	http.HandleFunc("/", idx)
 	//http.HandleFunc("/index", idx)
 	http.HandleFunc("/about", about)
@@ -33,7 +29,10 @@ func main() {
 	http.HandleFunc("/apply", apply)
 	http.HandleFunc("/redirect", redirect)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
-	//http.ListenAndServe(":8080", nil)
+}
+
+func main() {
+	appengine.Main()
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
