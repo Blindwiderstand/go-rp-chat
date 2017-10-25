@@ -28,7 +28,8 @@ func init() {
 	http.HandleFunc("/contact", contact)
 	http.HandleFunc("/apply", apply)
 	http.HandleFunc("/redirect", redirect)
-	http.Handle("/favicon.ico", http.NotFoundHandler())
+	http.HandleFunc("/favicon.ico", favicon)
+	http.Handle("/public", http.FileServer(http.Dir("./go-pub")))
 }
 
 func main() {
@@ -109,4 +110,13 @@ func apply(w http.ResponseWriter, req *http.Request) {
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	http.Redirect(w, req, "/contact", http.StatusSeeOther)
+}
+
+
+//func public(w http.ResponseWriter, req *http.Request) {
+//	http.FileServer(http.Dir("./go-pub"))
+//}
+
+func favicon (w http.ResponseWriter, req *http.Request) {
+	http.ServeFile(w, req, "./favicon.ico")
 }
