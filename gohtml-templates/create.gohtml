@@ -1,0 +1,19 @@
+{{template "header" .}}
+
+<h1>CREATE</h1>
+
+{{template "nav-main"}}
+
+<form action="/create" method="post">
+
+    <label for="cn">Character Name</label>
+    <input type="text" name="character_name">
+
+    <input type="submit">
+</form>
+
+{{if .CharacterName}}
+You created {{.CharacterName}}
+{{end}}
+
+{{template "footer"}}
