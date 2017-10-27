@@ -7,11 +7,8 @@ import (
 	"net/http"
 	"google.golang.org/appengine"
 	_ "github.com/go-sql-driver/mysql"
-	"io/ioutil"
-	"fmt"
 	"os"
 	"bufio"
-	"google.golang.org/appengine/file"
 )
 
 //Type template from Package Template
@@ -33,7 +30,7 @@ func init() {
 	var err error
 	var password string
 
-	if file, err := os.Open("mysql-google.config"); err == nil {
+	if file, err := os.Open(".mysql-google.config"); err == nil {
 		defer file.Close()
 
 		scanner := bufio.NewScanner(file)
