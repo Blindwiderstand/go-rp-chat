@@ -14,4 +14,4 @@
 .glide/
 
 # mysql for google cloud user
-./mysql-google.config
+.mysql-google.config
