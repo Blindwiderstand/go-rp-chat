@@ -10,6 +10,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"os"
 	"bufio"
+	"fmt"
 )
 
 //Type template from Package Template
@@ -27,17 +28,27 @@ type pageData struct {
 	UserID int
 }
 
+type googleCredentials struct {
+	instanceName string
+	userName string
+	mysqlPassword string
+}
+
 func init() {
 	var err error
-	var password string
+
+	gc := googleCredentials{
+		instanceName: "vivid-cargo-180511:europe-west1:character-db",
+		userName: "go-admin",
+	}
+
 
 	if file, err := os.Open(".mysql-google.config"); err == nil {
 		defer file.Close()
 
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
-			password = scanner.Text()
-			log.Println(password)
+			gc.mysqlPassword = scanner.Text()
 		}
 
 	} else {
@@ -45,14 +56,16 @@ func init() {
 	}
 
 	//Opens Connection to database. Needs a database driver for the right database.
-	db, err := mysql.DialPassword("vivid-cargo-180511:europe-west1:character-db", "go-admin",
-		password)
+	//db, err := mysql.DialPassword("vivid-cargo-180511:europe-west1:character-db", "go-admin", password)
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@cloudsql(%s)/", gc.userName, gc.mysqlPassword,
+		gc.instanceName))
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
+
 	// Make sure it's connected
 	if err = db.Ping(); err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	//needs relative reference
