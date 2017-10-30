@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"google.golang.org/appengine"
+	"github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/dialers/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"os"
 	"bufio"
@@ -44,8 +45,8 @@ func init() {
 	}
 
 	//Opens Connection to database. Needs a database driver for the right database.
-	db, err = sql.Open("mysql",
-		"go-admin:" + password + "@vivid-cargo-180511:europe-west1:character-db/character_db?tls=true")
+	db, err := mysql.DialPassword("vivid-cargo-180511:europe-west1:character-db", "go-admin",
+		password)
 	if err != nil {
 		panic(err)
 	}
