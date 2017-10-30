@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"google.golang.org/appengine"
-	"github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/dialers/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"os"
 	"bufio"
